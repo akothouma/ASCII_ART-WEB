@@ -6,7 +6,7 @@
     <body>
        
         <h1>Generate ASCII ART</h1>
-        <form method="post" action="/">
+        <form method="post" action="/ascii-art">
            <div>
             <label>Enter text here</label><br />
             <input type="text" name="userInput"><br />
@@ -22,11 +22,12 @@
             <input type="submit" value="Generate art">
            </div>
         </form>
-        <label>Your generated art is</label>
-        {{if .Result}}
-            <pre >
-                {{.Result}}
-            </pre>
-           {{end}}
+        <label>Your generated art is</label><br />
+        {{if .Result}} 
+        <pre >
+        {{.Result}}
+        </pre>
+       
+        {{end}}
     </body>
 </html>
