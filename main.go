@@ -1,7 +1,7 @@
 package main
 
 import (
-	 "ASCII-WEB/ascii-art/ascii-art/printingasciipackage"
+	"ASCII-WEB/ascii-art/printingasciipackage"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -60,10 +60,10 @@ func GenerateArt(w http.ResponseWriter, r *http.Request){
 	banner := r.FormValue("banners")
 
 	if text == "" {
+		http.ServeFile(w,r,"400.html")
 		return
 	}
 	result1 := printingasciipackage.PrintingAscii(text, banner)
-	fmt.Println(result1)
 
 	neededData := ArtDetails{
 		UserInput:  text,
@@ -74,7 +74,6 @@ func GenerateArt(w http.ResponseWriter, r *http.Request){
 	err = tmpl.Execute(w, neededData) 
 	if err!=nil{
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		fmt.Println("Template execution error:", err)
 		return
 	}
 }
