@@ -8,8 +8,8 @@
         <h1>Generate ASCII ART</h1>
         <form method="post" action="/ascii-art">
            <div>
-            <label>Enter text here</label><br />
-            <input type="text" name="userInput"><br />
+            <label>Text Area</label><br />
+            <textarea type="text" name="userInput" placeholder="Enter text here" required></textarea><br />
             <label>Choose the banner file you want to use</label><br />
             <input type="radio" id="standard" name="banners" value="standard.txt" checked="checked">
             <label for="standard">standard</label><br />
@@ -24,10 +24,9 @@
         </form>
         <label>Your generated art is</label><br />
         {{if .Result}} 
-        <pre >
-        {{.Result}}
-        </pre>
-       
+        <pre>{{.Result}} </pre>
         {{end}}
+        <p><a href="/">Reset</a></p>
+    
     </body>
 </html>
