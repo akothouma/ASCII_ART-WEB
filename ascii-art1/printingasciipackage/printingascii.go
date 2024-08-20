@@ -5,13 +5,13 @@ import (
 	"os"
 	"strings"
 
-	"ASCII-WEB/ascii-art/mapPackage"
+	"ASCII-WEB/ascii-art1/mapPackage"
 )
 
 // Reads input text,gets the pattern convert it to ascii art
 
-func PrintingAscii(text, patternFile string) string {
-	text = strings.ReplaceAll(text, "\n", "\\n")
+func PrintingAscii(text, patternFile string) (string, error) {
+	// text = strings.ReplaceAll(text, "\n", "\\n")
 	res := ""
 
 	for i := 0; i < len(text); {
@@ -53,8 +53,11 @@ func PrintingAscii(text, patternFile string) string {
 		}
 		i++
 	}
-	lines := strings.Split(text, "\\n")
-	asciiMap := mapPackage.AsciiMapping(patternFile)
+	lines := strings.Split(text, "\r\n")
+	asciiMap, err := mapPackage.AsciiMapping(patternFile)
+	if err != nil {
+		return "", fmt.Errorf("Error mapping %v", patternFile)
+	}
 
 	count := 0
 	for _, word := range lines { // case of multiple newlines
@@ -72,5 +75,5 @@ func PrintingAscii(text, patternFile string) string {
 			}
 		}
 	}
-	return res
+	return res, nil
 }
