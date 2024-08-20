@@ -8,23 +8,36 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <h1>ASCII Art Web</h1>
-    <form action="/ascii-art" method="POST" target="_top">
-        <label for="text" placeholder="hello">Enter Text:</label>
+    <h1>Generate ASCII ART</h1>
+    <form action="/ascii-art" method="post" target="_top">
+        <label for="text" >Enter Text:</label><br>
         <!-- <input type="text" id="text" name="text" placeholder="type Ssomething" required> -->
-        <textarea type="text" placeholder=" Type something" name="text" required></textarea>
+        <textarea type="text" placeholder=" Type something" name="text" ></textarea>
+        <!-- <br> -->
         <br>
+        
 
-        <label for="banner">Select Banner:</label>
-        <div class="segmented-control">
+        <label for="banner">Select Banner:</label><br>
+        <!-- <div >
             {{range .}}
-                <input type="radio" id="{{.}}" name="banner" value="{{.}}" aria-required="true">
+                <input type="radio" id="{{.}}" name="banner" value="{{.}}" >
                 <label for="{{.}}">{{.}}</label>
             {{end}}
-        </div>
+        </div> -->
+        <input type="radio" id="standard" name="banner" value="standard.txt">
+
+        <label for="standard" style="color: brown;">standard</label>
+        <input type="radio" id="shadow" name="banner" value="shadow.txt">
+
+        <label for="shadow">shadow</label>
+        <input type="radio" id="thinkertoy" name="banner" value="thinkertoy.txt">
+
+        <label for="thinkertoy">thinkertoy</label>
+       
         
 
         <br>
+       
         <button type="submit" >Generate ASCII Art</button>
     </form>
 </body>
