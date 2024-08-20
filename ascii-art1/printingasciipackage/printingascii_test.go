@@ -9,7 +9,7 @@ import (
 func TestPrintingAscii(t *testing.T) {
 	args := "hello" // string to be patterned and printed
 	file := "standard.txt"
-	out := PrintingAscii(args, file)
+	out, _ := PrintingAscii(args, file)
 	expected := []string{
 		` _              _   _          `,
 		`| |            | | | |         `,
