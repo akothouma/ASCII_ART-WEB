@@ -9,7 +9,7 @@ import (
 func TestAsciiMapping(t *testing.T) {
 	filetext := "standard.txt"
 
-	out := AsciiMapping(filetext)
+	out, _ := AsciiMapping(filetext)
 	expected := []string{
 		"           ",
 		`    /\     `,
