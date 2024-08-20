@@ -26,7 +26,7 @@ type ArtDetails struct {
 }
 
 func HomePageHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("index.html")
+	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
@@ -41,7 +41,7 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GenerateArt(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("index.html")
+	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
@@ -59,17 +59,17 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	fmt.Print(text)
 
 	if text == "" {
-		http.ServeFile(w, r, "400.html")
+		http.ServeFile(w, r, "templates/400.html")
 		return
 	}
 	if banner == "" {
-		http.ServeFile(w, r, "400.html")
+		http.ServeFile(w, r, "templates/400.html")
 		return
 	}
 
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	if err != nil {
-		http.ServeFile(w, r, "404.html")
+		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
 
