@@ -8,29 +8,25 @@ import (
 
 // AsciiMapping given a banner file, reads all graphics representations of the ASCII characters and
 // returns a map of the ASCII character to the graphics representations of the ASCII character
-func AsciiMapping(patternFile string) map[rune][]string {
+func AsciiMapping(patternFile string) (map[rune][]string, error) {
 	var splitted []string
 
 	if patternFile == "thinkertoy.txt" {
 		testfile, err1 := os.ReadFile(patternFile)
 		if len(testfile) == 0 {
-			fmt.Fprintln(os.Stderr, "error:", patternFile, "is empty or doesn't exist ")
-			os.Exit(1)
+			return nil, fmt.Errorf("%v is empty", testfile)
 		} else if err1 != nil {
-			fmt.Println(err1.Error())
-			os.Exit(1)
+			return nil, fmt.Errorf("%v doesnt exist", testfile)
 		}
 
 		splitted = strings.Split(string(testfile), "\r\n") // strings of thinkeratoi are seperated by \r\n [13,10]
 	} else {
 		testfile, err := os.ReadFile(patternFile)
 		if len(testfile) == 0 {
-			fmt.Println("error:", patternFile, "is empty")
-			os.Exit(1)
+			return nil, fmt.Errorf("%v is empty", testfile)
 		}
 		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
+			return nil, fmt.Errorf("%v doesnt exist", testfile)
 		}
 
 		splitted = strings.Split(string(testfile), "\n")
@@ -54,5 +50,5 @@ func AsciiMapping(patternFile string) map[rune][]string {
 		startAscii++
 	}
 
-	return asciiMapping
+	return asciiMapping, nil
 }
