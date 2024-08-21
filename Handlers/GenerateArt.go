@@ -20,10 +20,12 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method != http.MethodPost {
+		w.WriteHeader(405)
 		http.ServeFile(w, r, "templates/405.html")
 		return
 	}
 	if r.URL.Path != "/ascii-art" {
+		w.WriteHeader(404)
 		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
@@ -31,10 +33,13 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+
+
 	text := r.FormValue("userInput")
 	banner := r.FormValue("banners")
 
 	if text == "" {
+		w.WriteHeader(400)
 		http.ServeFile(w, r, "templates/400.html")
 		return
 	}
