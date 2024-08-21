@@ -45,6 +45,11 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/400.html")
 		return
 	}
+	if banner == "" {
+		w.WriteHeader(400)
+		http.ServeFile(w, r, "templates/400.html")
+		return
+	}
 
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	fmt.Println(err)
