@@ -12,12 +12,12 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path != "/" {
-		http.ServeFile(w, r, "404.html")
+		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
 
 	if r.Method != http.MethodGet {
-		http.ServeFile(w, r, "405.html")
+		http.ServeFile(w, r, "templates/405.html")
 		return
 	}
 	tmpl.Execute(w, nil)
