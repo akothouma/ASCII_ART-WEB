@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 
 	"ASCII-WEB/ascii-art1/printingasciipackage"
+
 )
 
 type ArtDetails struct {
@@ -45,7 +47,14 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
+	fmt.Println(err)
 	if err != nil {
+		if err.Error()=="Character not supported"{
+			w.WriteHeader(400)
+			http.ServeFile(w,r,"templates/400.html")
+			return
+		}
+		w.WriteHeader(404)
 		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
