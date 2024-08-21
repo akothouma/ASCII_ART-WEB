@@ -1,2 +1,3 @@
-# ASCII_ART-WEB
-Exploring HTML/CSS and Go
+# ascii-art-web
+
+A GUI implementation of ASCII-ART project
