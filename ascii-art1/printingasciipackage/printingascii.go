@@ -2,7 +2,6 @@ package printingasciipackage
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"ASCII-WEB/ascii-art1/mapPackage"
@@ -16,8 +15,7 @@ func PrintingAscii(text, patternFile string) (string, error) {
 
 	for i := 0; i < len(text); {
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'a' {
-			fmt.Fprintf(os.Stderr, "error: Special character %v%v is not supported \n", string(text[i]), string(text[i+1]))
-			os.Exit(1)
+			return "",fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'b' {
 			l := len(text) - 2
@@ -36,16 +34,13 @@ func PrintingAscii(text, patternFile string) (string, error) {
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'v' {
 
-			fmt.Fprintf(os.Stderr, "error: Special character %v%v is not supported \n", string(text[i]), string(text[i+1]))
-			os.Exit(1)
+			return "",fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'f' {
-			fmt.Fprintf(os.Stderr, "error: Special character %v%v is not supported \n", string(text[i]), string(text[i+1]))
-			os.Exit(1)
+			return "",fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'r' {
-			fmt.Fprintf(os.Stderr, "error: Special character %v%v is not supported \n", string(text[i]), string(text[i+1]))
-			os.Exit(1)
+			return "",fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] > 127 {
 			return "",fmt.Errorf("Character not supported")
