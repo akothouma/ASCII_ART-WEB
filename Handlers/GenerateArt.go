@@ -39,7 +39,6 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Retrieve user input and banner selection
 	text := r.FormValue("userInput")
 	banner := r.FormValue("banners")
 
@@ -58,11 +57,12 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	if err != nil {
 		if err.Error() == "Character not supported" {
-			http.Error(w, "Bad Request: special characters not allowed(\\v,\\b,\\a,\\r,\\f) ", http.StatusBadRequest)
-			// return
-		} else {
-			http.Error(w, "Bad Request", http.StatusBadRequest)
+			w.WriteHeader(400)
+			http.ServeFile(w, r, "templates/400.html")
+			return
 		}
+		w.WriteHeader(404)
+		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
 
