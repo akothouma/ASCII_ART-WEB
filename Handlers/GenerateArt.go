@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"ASCII-WEB/ascii-art1/printingasciipackage"
-
 )
 
 type ArtDetails struct {
@@ -36,7 +35,6 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
 	text := r.FormValue("userInput")
 	banner := r.FormValue("banners")
 
@@ -54,9 +52,9 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	fmt.Println(err)
 	if err != nil {
-		if err.Error()=="Character not supported"{
+		if err.Error() == "Character not supported" {
 			w.WriteHeader(400)
-			http.ServeFile(w,r,"templates/400.html")
+			http.ServeFile(w, r, "templates/400.html")
 			return
 		}
 		w.WriteHeader(404)
