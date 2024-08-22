@@ -15,7 +15,7 @@ func PrintingAscii(text, patternFile string) (string, error) {
 
 	for i := 0; i < len(text); {
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'a' {
-			return "",fmt.Errorf("Character not supported")
+			return "", fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'b' {
 			l := len(text) - 2
@@ -34,16 +34,16 @@ func PrintingAscii(text, patternFile string) (string, error) {
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'v' {
 
-			return "",fmt.Errorf("Character not supported")
+			return "", fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'f' {
-			return "",fmt.Errorf("Character not supported")
+			return "", fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] == '\\' && text[i+1] == 'r' {
-			return "",fmt.Errorf("Character not supported")
+			return "", fmt.Errorf("Character not supported")
 		}
 		if i+1 < len(text) && text[i] > 127 {
-			return "",fmt.Errorf("Character not supported")
+			return "", fmt.Errorf("Character not supported")
 		}
 		i++
 	}
