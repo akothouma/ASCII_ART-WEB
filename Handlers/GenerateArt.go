@@ -46,10 +46,9 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	// Validate user input and banner selection
 	if text == "" || banner == "" {
 		http.Error(w, "Bad Request, input text and select banner file", http.StatusBadRequest)
-		// http.ServeFile(w, r, "templates/400.html")
 		return
 	}
-	//check if banner file exists
+	// check if banner file exists
 	// if _, err := os.Stat("path/to/banner/files/" + banner); os.IsNotExist(err) {
 	// 	http.NotFound(w, r) // 404 if banner file is missing
 	// 	return
@@ -59,13 +58,10 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	if err != nil {
 		if err.Error() == "Character not supported" {
-			w.WriteHeader(400)
-			http.ServeFile(w, r, "templates/400.html")
-			// http.Error(w, "Bad Request", http.StatusBadRequest)
+			http.Error(w, "Bad Request: special characters not allowed(\\v,\\b,\\a,\\r,\\f) ", http.StatusBadRequest)
 			// return
 		} else {
-			w.WriteHeader(404)
-			http.ServeFile(w, r, "templates/404.html")
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 		}
 		return
 	}
