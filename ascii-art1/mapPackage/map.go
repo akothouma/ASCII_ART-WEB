@@ -3,17 +3,21 @@ package mapPackage
 import (
 	"crypto/sha256"
 	"fmt"
+	"log"
 	"os"
 	"strings"
+)
+
+const (
+	standardHash   = "e194f1033442617ab8a78e1ca63a2061f5cc07a3f05ac226ed32eb9dfd22a6bf"
+	shadowHash     = "26b94d0b134b77e9fd23e0360bfd81740f80fb7f6541d1d8c5d85e73ee550f73"
+	thinkertoyHash = "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
 )
 
 // AsciiMapping given a banner file, reads all graphics representations of the ASCII characters and
 // returns a map of the ASCII character to the graphics representations of the ASCII character
 func AsciiMapping(patternFile string) (map[rune][]string, error) {
 	var splitted []string
-	standardHash := "e194f1033442617ab8a78e1ca63a2061f5cc07a3f05ac226ed32eb9dfd22a6bf"
-	shadowHash := "26b94d0b134b77e9fd23e0360bfd81740f80fb7f6541d1d8c5d85e73ee550f73"
-	thinkertoyHash := "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
 
 	testfile, err := os.ReadFile(patternFile)
 	if err != nil {
@@ -35,7 +39,7 @@ func AsciiMapping(patternFile string) (map[rune][]string, error) {
 	}
 
 	if len(splitted) != 856 {
-		fmt.Printf("error : %v file modified, exiting...\n", patternFile)
+		log.Printf("error : %v file modified, exiting...\n", patternFile)
 		os.Exit(1)
 	}
 
