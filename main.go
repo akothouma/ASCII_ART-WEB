@@ -19,7 +19,7 @@ func main() {
 	port := ":5000"
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
-		fmt.Print("Server failed to start succesfully")
+		fmt.Printf("\nServer failed to start \n %s\n", err)
 		return
 	}
 }
