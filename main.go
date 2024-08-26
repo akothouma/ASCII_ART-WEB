@@ -1,0 +1,20 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	handlers "ASCII-WEB/Handlers"
+)
+
+func main() {
+	http.HandleFunc("/", handlers.HomePageHandler)
+	fmt.Println("Starting server on http://localhost:5000")
+	http.HandleFunc("/ascii-art", handlers.GenerateArt)
+	port := ":5000"
+	err := http.ListenAndServe(port, nil)
+	if err != nil {
+		fmt.Print("Server failed to start succesfully")
+		return
+	}
+}
