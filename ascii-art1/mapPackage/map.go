@@ -21,6 +21,7 @@ func AsciiMapping(patternFile string) (map[rune][]string, error) {
 
 	testfile, err := os.ReadFile(patternFile)
 	if err != nil {
+		fmt.Printf("error: %v file missing\n ", patternFile)
 		return nil, fmt.Errorf("%v doesn't exist", patternFile)
 	}
 
@@ -28,11 +29,15 @@ func AsciiMapping(patternFile string) (map[rune][]string, error) {
 
 	if patternFile == "thinkertoy.txt" {
 		if testFileHash != thinkertoyHash {
+			fmt.Printf("error: %v file has been modified\n ", patternFile)
+
 			return nil, fmt.Errorf("%v has been modified", patternFile)
 		}
 		splitted = strings.Split(string(testfile), "\r\n") // Thinkertoy uses \r\n
 	} else {
 		if testFileHash != standardHash && testFileHash != shadowHash {
+			fmt.Printf("error: %v file has been modified\n ", patternFile)
+
 			return nil, fmt.Errorf("%v has been modified", patternFile)
 		}
 		splitted = strings.Split(string(testfile), "\n")
