@@ -14,32 +14,23 @@ func AsciiMapping(patternFile string) (map[rune][]string, error) {
 	standardHash := "e194f1033442617ab8a78e1ca63a2061f5cc07a3f05ac226ed32eb9dfd22a6bf"
 	shadowHash := "26b94d0b134b77e9fd23e0360bfd81740f80fb7f6541d1d8c5d85e73ee550f73"
 	thinkertoyHash := "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
+
+	testfile, err := os.ReadFile(patternFile)
+	if err != nil {
+		return nil, fmt.Errorf("%v doesn't exist", patternFile)
+	}
+
+	testFileHash := fmt.Sprintf("%x", sha256.Sum256(testfile))
+
 	if patternFile == "thinkertoy.txt" {
-		testfile, err1 := os.ReadFile(patternFile)
-		testFileHash := fmt.Sprintf("%x \n", sha256.Sum256(testfile))
 		if testFileHash != thinkertoyHash {
 			return nil, fmt.Errorf("%v has been modified", patternFile)
 		}
-		if len(testfile) == 0 {
-			return nil, fmt.Errorf("%v is empty", testfile)
-		} else if err1 != nil {
-			return nil, fmt.Errorf("%v doesnt exist", testfile)
-		}
-
-		splitted = strings.Split(string(testfile), "\r\n") // strings of thinkeratoi are seperated by \r\n [13,10]
+		splitted = strings.Split(string(testfile), "\r\n") // Thinkertoy uses \r\n
 	} else {
-		testfile, err := os.ReadFile(patternFile)
-		testFileHash := fmt.Sprintf("%x \n", sha256.Sum256(testfile))
-		if testFileHash != standardHash || testFileHash != shadowHash {
+		if testFileHash != standardHash && testFileHash != shadowHash {
 			return nil, fmt.Errorf("%v has been modified", patternFile)
 		}
-		if len(testfile) == 0 {
-			return nil, fmt.Errorf("%v is empty", testfile)
-		}
-		if err != nil {
-			return nil, fmt.Errorf("%v doesnt exist", testfile)
-		}
-
 		splitted = strings.Split(string(testfile), "\n")
 	}
 
@@ -53,6 +44,9 @@ func AsciiMapping(patternFile string) (map[rune][]string, error) {
 	for i := 1; i < len(splitted); {
 		arrayString := []string{}
 		for j := 0; j < 8; j++ {
+			if i >= len(splitted) { // Avoid out-of-range errors
+				break
+			}
 			arrayString = append(arrayString, splitted[i])
 			i++
 		}
