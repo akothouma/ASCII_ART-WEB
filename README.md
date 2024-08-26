@@ -35,7 +35,7 @@ To run the server, follow these steps:
 
 3. **Access the Web Application:**
 
-    Open your web browser and navigate to `http://localhost:8080` to access the application.
+    Open your web browser and navigate to `http://localhost:5000` to access the application.
 
 ### HTTP Endpoints
 
