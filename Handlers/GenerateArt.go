@@ -93,3 +93,4 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+}
