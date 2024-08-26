@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -15,50 +14,55 @@ type ArtDetails struct {
 }
 
 func GenerateArt(w http.ResponseWriter, r *http.Request) {
+	// Parse the template
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+
+	// Check for valid HTTP method
 	if r.Method != http.MethodPost {
-		w.WriteHeader(405)
-		http.ServeFile(w, r, "templates/405.html")
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
+
+	// Check for correct URL path
 	if r.URL.Path != "/ascii-art" {
-		w.WriteHeader(404)
-		http.ServeFile(w, r, "templates/404.html")
+		http.NotFound(w, r)
 		return
 	}
+
+	// Parse the form data
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
+	// Retrieve user input and banner selection
 	text := r.FormValue("userInput")
 	banner := r.FormValue("banners")
 
-	if text == "" {
-		w.WriteHeader(400)
-		http.ServeFile(w, r, "templates/400.html")
+	// Validate user input and banner selection
+	if text == "" || banner == "" {
+		http.Error(w, "Bad Request, input text and select banner file", http.StatusBadRequest)
 		return
 	}
-	if banner == "" {
-		w.WriteHeader(400)
-		http.ServeFile(w, r, "templates/400.html")
-		return
-	}
+	// check if banner file exists
+	// if _, err := os.Stat("path/to/banner/files/" + banner); os.IsNotExist(err) {
+	// 	http.NotFound(w, r) // 404 if banner file is missing
+	// 	return
+	// }
 
+	// Generate ASCII art
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
-	fmt.Println(err)
 	if err != nil {
 		if err.Error() == "Character not supported" {
-			w.WriteHeader(400)
-			http.ServeFile(w, r, "templates/400.html")
-			return
+			http.Error(w, "Bad Request: special characters not allowed(\\v,\\b,\\a,\\r,\\f) ", http.StatusBadRequest)
+			// return
+		} else {
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 		}
-		w.WriteHeader(404)
-		http.ServeFile(w, r, "templates/404.html")
 		return
 	}
 
@@ -68,8 +72,8 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 		Result:     result1,
 	}
 
-	err = tmpl.Execute(w, neededData)
-	if err != nil {
+	// Execute the template and write the response
+	if err := tmpl.Execute(w, neededData); err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
