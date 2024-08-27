@@ -13,11 +13,11 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path != "/" {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		http.Error(w, "404 Not Found", http.StatusNotFound)
 		return
 	}
 	if r.Method != http.MethodGet {
-		http.Error(w," ",http.StatusMethodNotAllowed)
+		http.Error(w, " ", http.StatusMethodNotAllowed)
 		return
 	}
 	if err := tmpl.Execute(w, nil); err != nil {
