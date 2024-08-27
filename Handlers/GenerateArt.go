@@ -57,11 +57,12 @@ func GenerateArt(w http.ResponseWriter, r *http.Request) {
 	// Generate ASCII art
 	result1, err := printingasciipackage.PrintingAscii(text, banner)
 	if err != nil {
-		if err.Error() == "Character not supported" {
+		if err.Error() == "character not supported" {
 			http.Error(w, "Bad Request: special characters not allowed(\\v,\\b,\\a,\\r,\\f) ", http.StatusBadRequest)
 			// return
 		} else {
-			http.Error(w, "Bad Request", http.StatusBadRequest)
+			// w.Header()
+			http.Error(w, "Oops something went wrong on our end. Try again later", http.StatusInternalServerError)
 		}
 		return
 	}
